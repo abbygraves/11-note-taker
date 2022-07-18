@@ -11,7 +11,7 @@ An application used to write and take notes.
 
 <br/>
 
-## **Build With:**
+## **Built With:**
   + JavaScript
   + Node.js 
   + Express.js
