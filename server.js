@@ -13,6 +13,7 @@ const { notes } = require('./Develop/db/db.json');
 
 const notesArray = [];
 
+
 function newNote(data) {
   notesArray.push(data);
   fs.writeFileSync(
