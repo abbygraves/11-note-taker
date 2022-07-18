@@ -1,4 +1,5 @@
 const express = require('express');
+const { notes } = require('./Develop/db/db.json');
 const fs = require('fs');
 const path = require('path');
 const PORT = process.env.PORT || 3001;
@@ -6,9 +7,9 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));  // ⬅︎ parse incoming string or array data
 app.use(express.json());  // ⬅︎ parse incoming JSON data
-app.use(express.static('public'));
+app.use(express.static('./develop/public'));
 
-const { notes } = require('./Develop/db/db.json');
+
 
 const notesArray = [];
 
