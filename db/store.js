@@ -7,16 +7,17 @@ const {uuid} = require('uuidv4');
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-class db {
+class Store {
   read(){
-    return readFileAsync('db.json', 'utf-8');
+    return readFileAsync('db/db.json', 'utf-8');
   }
 
   write(note){
-    return writeFileAsync('db.json',JSON.stringify(note));
+    return writeFileAsync('db/db.json',JSON.stringify(note));
   }
 
   getNotes(){
+    // console.log("inside getNotes")
     //method to get notes
     // use read() method to pull data from db.json, then return an array of the JSON notes
     return this.read().then((notes)=> {
@@ -44,11 +45,14 @@ class db {
       .then(()=> newNote);
   }
 
-  removeNote(id){
-    //method to remove notes
+  removeNote(id) {
+    // Get all notes, remove the note with the given id, write the filtered notes
+    return this.getNotes()
+      .then((notes) => notes.filter((note) => note.id !== id))
+      .then((filteredNotes) => this.write(filteredNotes));
   }
 }
 
 
 
-module.exports = new db();
+module.exports = new Store();
