@@ -1,39 +1,38 @@
 const express = require('express');
-const { notes } = require('./Develop/db/db.json');
 const fs = require('fs');
 const path = require('path');
+const db = require('./Develop/db/db.json');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));  // ⬅︎ parse incoming string or array data
 app.use(express.json());  // ⬅︎ parse incoming JSON data
-app.use(express.static('./develop/public'));
+app.use(express.static('./Develop/public'));
 
-
+const { notes } = require('./Develop/db/db.json');
 
 const notesArray = [];
 
-function newNote(body, notesArray) {
-  const note = body;
-  notesArray.push(note);
+function newNote(data) {
+  notesArray.push(data);
   fs.writeFileSync(
     path.join(__dirname, './Develop/db/db.json'),
     JSON.stringify({ notes: notesArray }, null, 2)
   );
 
-  return note;
+  return data;
 }
+
+
 
 
 // API ROUTES
 app.get('/api/notes', (req, res) => {
-  let results = notes;
-  res.json(results);
+  res.json(notesArray);
 });
 
 app.post('/api/notes', (req, res) => {
-  req.body.id = notes.length.toString();
-  const note = createNewNote(req.body, notes);
+  const note = newNote(req.body);
   res.json(note);
 });
 
@@ -43,13 +42,16 @@ app.post('/api/notes', (req, res) => {
 
 // HTML ROUTES
 app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+  res.sendFile(path.join(__dirname, '/Develop/public/notes.html'));
 });
 
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+  res.sendFile(path.join(__dirname, '/Develop/public/index.html'));
 });
+
+
+
 
 
 
