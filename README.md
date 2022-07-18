@@ -5,6 +5,7 @@
 ## **Description**
 An application used to write and take notes.
 
+### [Click to View Application](https://sleepy-scrubland-90315.herokuapp.com/)
 
 <img src="./assets/images/note-taker-app-screenshot.png"/>
 
