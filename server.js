@@ -30,7 +30,7 @@ app.get('/api/notes', (req, res) => {
   res.json(results);
 });
 
-app.post('/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
   req.body.id = notes.length.toString();
   const note = createNewNote(req.body, notes);
   res.json(note);
