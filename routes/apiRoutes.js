@@ -1,13 +1,24 @@
 const router = require('express').Router();
-const path = require('path');
+const db = require('../db/db')
 
 
 // API ROUTES
-app.get('/api/notes', (req, res) => {
-  res.json(notesArray);
+router.get('/api/notes', (req, res) => {
+  db
+    .getNotes()
+    .then((notes)=>{
+      return res.json(notes);
+    })
+    .catch((error)=> res.status(500).json(error))
 });
 
-app.post('/api/notes', (req, res) => {
-  const note = newNote(req.body);
-  res.json(note);
+router.post('/api/notes', (req, res) => {
+  const newNote = req.body;
+  
+  db
+    .addNote(newNote)
+    .then((note)=> res.json(note))
+    .catch((error)=> res.status(500).json(error))
 });
+
+module.exports = router

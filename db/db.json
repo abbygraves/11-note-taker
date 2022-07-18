@@ -1,12 +1,12 @@
-{
-  "notes": [
+[
     {
       "title": "note",
-      "text": "test"
+      "text": "test",
+      "id":"1"
     },
     {
       "title": "hoiht",
-      "text": "fdsafva"
+      "text": "fdsafva",
+      "id":"2"
     }
-  ]
-}
+]

@@ -18,11 +18,30 @@ class db {
 
   getNotes(){
     //method to get notes
-    
+    // use read() method to pull data from db.json, then return an array of the JSON notes
+    return this.read().then((notes)=> {
+      // return an array of the notes
+      return [].concat(JSON.parse(notes));
+    })
+
   }
 
   addNote(note){
     // method to add notes
+    // destructure title and text from note
+    const {title, text} = note
+
+    // should probably check if title and text exist, if not throw error
+
+    //adding uuid to the new note
+    const newNote = {title, text, id: uuid()};
+
+    // get all the notes, add the new notes, write all the updated notes, return newNote
+
+    return this.getNotes()
+      .then((notes)=> [...notes, newNote])
+      .then((updatedNotes)=> this.write(updatedNotes))
+      .then(()=> newNote);
   }
 
   removeNote(id){
@@ -31,12 +50,5 @@ class db {
 }
 
 
-function newNote(data) {
-  notesArray.push(data);
-  fs.writeFileSync(
-    path.join(__dirname, './db/db.json'),
-    JSON.stringify({ notes: notesArray }, null, 2)
-  );
 
-  return data;
-};
+module.exports = new db();
